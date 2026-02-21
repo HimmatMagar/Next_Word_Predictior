@@ -1,0 +1,10 @@
+numpy
+scikit-learn
+tensorflow
+python-box
+ensure
+pyYAML
+fastapi
+uvicorn
+pydantic
+-e .
