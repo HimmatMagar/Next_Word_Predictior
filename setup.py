@@ -14,11 +14,11 @@ SRC_REPO = "nextWordPrediction"
 AUTHOR_EMAIL = "himmatmagar007@gmail.com"
 
 setuptools.setup(
-      name="Visa Grant Prediction",
+      name="Next Word Prediction",
       version=__version__,
       author=AUTHOR_NAME,
       author_email=AUTHOR_EMAIL,
-      description="End to End ML implementation for austrila visa grant prediction",
+      description="End to End DL implementation for Next Word Prediction",
       long_description=long_description,
       long_description_content_type='text/markdown',
       url=f"https://github.com/{AUTHOR_NAME}/{REPO_NAME}",
