@@ -1,7 +1,7 @@
 ariticate_root: artificate
 
 data_ingestion:
-  root_dir: artifact/data_ingestion
-  source_url: "https://github.com/HimmatMagar/datae/raw/refs/heads/main/australia_visa_applications.zip"
-  ziped_data_path: artifact/data_ingestion/data.zip
-  unziped_file: artifact/data_ingestion
+  root_dir: artificate/data_ingestion
+  source_url: "https://github.com/HimmatMagar/datae/raw/refs/heads/main/quotes.zip"
+  ziped_data_path: artificate/data_ingestion/data.zip
+  unziped_file: artificate/data_ingestion
