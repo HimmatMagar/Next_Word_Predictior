@@ -1,7 +1,7 @@
 import os
 import yaml
 import json
-import joblib
+import pickle
 from pathlib import Path
 from box.config_box import ConfigBox
 from src.nextWordPrediction import logger
@@ -75,7 +75,7 @@ def load_file(file:Path):
       """
       try:
             with open(file, 'rb') as f:
-                  data = joblib.load(f)
+                  data = pickle.load(f)
             return data
       except Exception as e:
             raise e

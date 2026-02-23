@@ -1,6 +1,6 @@
 from src.nextWordPrediction.utils import *
 from src.nextWordPrediction.constants import __CONFIG__, __PARAMS__
-from src.nextWordPrediction.entity import DataIngestionConfig, DataTransformationConfig
+from src.nextWordPrediction.entity import DataIngestionConfig, DataTransformationConfig, ModelBuildingConfig
 
 
 class ConfigManager:
@@ -52,3 +52,36 @@ class ConfigManager:
                   data_file_path=config.data_file_path
             )
             return data_transformation_config
+
+
+      def get_model_building_config(self) -> ModelBuildingConfig:
+            """
+                  Loads the model building configuration from the YAML file and
+                  prepares the required directories.
+
+                  Returns:
+                        ModelBuildingConfig: Configuration object containing all the
+                        parameter with data path for model train.
+            """
+            config = self.config.model_building
+            params = self.params.parameter
+
+            create_directory([config.root_dir])
+
+            model_building_config = ModelBuildingConfig(
+                  root_dir=config.root_dir,
+                  input_file=config.input_file_path,
+                  output_file=config.output_file_path,
+                  model=config.model,
+                  vocab_size=params.max_vocab,
+                  seq_length=params.seq_len,
+                  lstm_unit=params.lstm_unit,
+                  embedding_units=params.embedding_units,
+                  optimizer=params.optimizer,
+                  epochs= params.epochs,
+                  batch_size=params.batch_size,
+                  spliting=params.spliting,
+                  activation=params.activation
+            )
+
+            return model_building_config

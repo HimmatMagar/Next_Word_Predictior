@@ -9,3 +9,9 @@ data_ingestion:
 data_transformation:
   root_dir: artificate/data_transformation
   data_file_path: artificate/data_ingestion/quotes.csv
+
+model_building:
+  root_dir: artificate/build_model
+  input_file_path: artificate/data_transformation/input_seq.pkl
+  output_file_path: artificate/data_transformation/output.pkl
+  model: model.h5
