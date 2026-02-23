@@ -134,6 +134,10 @@ celerybeat.pid
 # SageMath parsed files
 *.sage.py
 
+#Pickle file
+artificate/data_transformation/*.pkl
+
+
 # Environments
 .env
 .envrc
