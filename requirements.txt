@@ -1,3 +1,4 @@
+pandas
 numpy
 scikit-learn
 tensorflow
@@ -7,4 +8,5 @@ pyYAML
 fastapi
 uvicorn
 pydantic
+notebook
 -e .

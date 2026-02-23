@@ -1,0 +1,10 @@
+params:
+  max_vocab: 1500
+  seq_len: 252
+  embedding_units: 125
+  lstm_unit: 95
+  optimizer: "nadam"
+  epochs: 50
+  batch_size: 95
+  spliting: 0.25
+  activation: "softmax"

@@ -1,4 +1,5 @@
-# Next_Word_Predictior
+# Next Word Predictior
+#### This is the end to end Deep Learning based Next Word Prediction project using LSTM or GRU model.
 
 
 ### How to setup?
