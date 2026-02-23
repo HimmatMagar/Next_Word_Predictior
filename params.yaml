@@ -1,4 +1,4 @@
-params:
+parameter:
   max_vocab: 1500
   seq_len: 252
   embedding_units: 125

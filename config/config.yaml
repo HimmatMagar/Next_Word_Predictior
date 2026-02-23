@@ -5,3 +5,7 @@ data_ingestion:
   source_url: "https://github.com/HimmatMagar/datae/raw/refs/heads/main/quotes.zip"
   ziped_data_path: artificate/data_ingestion/data.zip
   unziped_file: artificate/data_ingestion
+
+data_transformation:
+  root_dir: artificate/data_transformation
+  data_file_path: artificate/data_ingestion/quotes.csv
