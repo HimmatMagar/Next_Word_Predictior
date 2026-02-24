@@ -12,7 +12,8 @@ class PredictionPipeline:
 
 
       def transform_input(self, data):
-            seq = self.tokenizer.texts_to_sequences(data)
+            data['text'] = data['text'].str.lower()
+            seq = self.tokenizer.texts_to_sequences(data['text'].tolist())
             input_seq = pad_sequences(
                   sequences=seq,
                   maxlen=252,
