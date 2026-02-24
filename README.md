@@ -2,6 +2,11 @@
 #### This is the end to end Deep Learning based Next Word Prediction project using LSTM or GRU model.
 
 
+#### Mode Accuracy and Loss
+1. Accuracy: 48%
+5. Loss: 2.3266
+
+
 ### How to setup?
 
 #### Steps:
