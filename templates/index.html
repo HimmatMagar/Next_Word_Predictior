@@ -4,246 +4,636 @@
 <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Next Word Predictor</title>
-      <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400&display=swap"
-            rel="stylesheet">
+      <title>next word · clean UI</title>
       <style>
-            *,
-            *::before,
-            *::after {
-                  box-sizing: border-box;
+            * {
                   margin: 0;
                   padding: 0;
-            }
-
-            :root {
-                  --bg: #0d0d0f;
-                  --surface: #16161a;
-                  --border: #2a2a32;
-                  --accent: #c8f04a;
-                  --accent-dim: rgba(200, 240, 74, 0.12);
-                  --text: #e8e8ec;
-                  --muted: #6b6b78;
+                  box-sizing: border-box;
             }
 
             body {
-                  font-family: 'DM Mono', monospace;
-                  background: var(--bg);
-                  color: var(--text);
+                  background: linear-gradient(145deg, #f6f9fc 0%, #edf2f7 100%);
+                  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
                   min-height: 100vh;
                   display: flex;
                   align-items: center;
                   justify-content: center;
-                  padding: 2rem;
-                  overflow: hidden;
-            }
-
-            /* Background grid */
-            body::before {
-                  content: '';
-                  position: fixed;
-                  inset: 0;
-                  background-image:
-                        linear-gradient(rgba(200, 240, 74, 0.03) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(200, 240, 74, 0.03) 1px, transparent 1px);
-                  background-size: 48px 48px;
-                  pointer-events: none;
-                  z-index: 0;
+                  padding: 1.5rem;
             }
 
             .card {
-                  position: relative;
-                  z-index: 1;
-                  background: var(--surface);
-                  border: 1px solid var(--border);
-                  border-radius: 20px;
-                  padding: 3rem;
+                  max-width: 820px;
                   width: 100%;
-                  max-width: 600px;
-                  animation: fadeUp 0.6s ease both;
-            }
-
-            @keyframes fadeUp {
-                  from {
-                        opacity: 0;
-                        transform: translateY(24px);
-                  }
-
-                  to {
-                        opacity: 1;
-                        transform: translateY(0);
-                  }
-            }
-
-            .label-tag {
-                  display: inline-block;
-                  font-size: 0.65rem;
-                  font-weight: 400;
-                  letter-spacing: 0.18em;
-                  text-transform: uppercase;
-                  color: var(--accent);
-                  border: 1px solid rgba(200, 240, 74, 0.3);
-                  border-radius: 100px;
-                  padding: 0.3em 0.9em;
-                  margin-bottom: 1.5rem;
+                  background: rgba(255, 255, 255, 0.7);
+                  backdrop-filter: blur(12px);
+                  -webkit-backdrop-filter: blur(12px);
+                  border: 1px solid rgba(255, 255, 255, 0.5);
+                  border-radius: 2.5rem;
+                  box-shadow: 0 25px 50px -10px rgba(0, 20, 40, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+                  padding: 2.5rem 2.2rem;
+                  transition: all 0.2s ease;
             }
 
             h1 {
-                  font-family: 'Syne', sans-serif;
-                  font-size: clamp(2rem, 5vw, 3rem);
-                  font-weight: 800;
-                  line-height: 1.1;
-                  margin-bottom: 0.4rem;
+                  font-size: 2rem;
+                  font-weight: 500;
                   letter-spacing: -0.02em;
+                  color: #1e293b;
+                  display: flex;
+                  align-items: center;
+                  gap: 0.6rem;
+                  margin-bottom: 0.2rem;
             }
 
             h1 span {
-                  color: var(--accent);
+                  background: #d0d9e9;
+                  color: #0b1e33;
+                  font-size: 0.85rem;
+                  font-weight: 500;
+                  padding: 0.25rem 0.8rem;
+                  border-radius: 40px;
+                  letter-spacing: normal;
+                  border: 1px solid #ffffff80;
             }
 
-            .subtitle {
-                  color: var(--muted);
-                  font-size: 0.82rem;
-                  margin-bottom: 2.5rem;
-            }
-
-            /* Input area */
-            .input-group {
-                  position: relative;
-                  margin-bottom: 1rem;
-            }
-
-            .input-group input {
-                  width: 100%;
-                  background: var(--bg);
-                  border: 1.5px solid var(--border);
-                  border-radius: 12px;
-                  color: var(--text);
-                  font-family: 'DM Mono', monospace;
-                  font-size: 1rem;
-                  padding: 1rem 1.2rem;
-                  outline: none;
-                  transition: border-color 0.2s, box-shadow 0.2s;
-            }
-
-            .input-group input::placeholder {
-                  color: var(--muted);
-            }
-
-            .input-group input:focus {
-                  border-color: var(--accent);
-                  box-shadow: 0 0 0 3px rgba(200, 240, 74, 0.1);
-            }
-
-            button[type="submit"] {
-                  width: 100%;
-                  background: var(--accent);
-                  color: #0d0d0f;
-                  font-family: 'Syne', sans-serif;
-                  font-weight: 700;
+            .sub {
+                  color: #475569;
+                  font-weight: 400;
                   font-size: 0.95rem;
-                  letter-spacing: 0.04em;
+                  margin-top: 0.1rem;
+                  margin-bottom: 2rem;
+                  border-left: 3px solid #94a3b8;
+                  padding-left: 1rem;
+            }
+
+            /* text field */
+            .input-section {
+                  margin-bottom: 2rem;
+            }
+
+            .textarea-wrapper {
+                  background: #ffffffd9;
+                  border-radius: 28px;
+                  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.02), 0 4px 12px rgba(0, 30, 60, 0.05);
+                  border: 1px solid #ffffff;
+                  transition: box-shadow 0.15s, border-color 0.15s;
+            }
+
+            .textarea-wrapper:focus-within {
+                  box-shadow: 0 0 0 3px rgba(56, 132, 255, 0.15), inset 0 1px 4px #e9f0ff;
+                  border-color: #9bb8ff;
+            }
+
+            textarea {
+                  width: 100%;
                   border: none;
-                  border-radius: 12px;
-                  padding: 1rem;
-                  cursor: pointer;
-                  transition: transform 0.15s, opacity 0.15s;
+                  background: transparent;
+                  font-family: inherit;
+                  font-size: 1.1rem;
+                  line-height: 1.6;
+                  padding: 1.2rem 1.5rem;
+                  resize: vertical;
+                  min-height: 140px;
+                  color: #0f1a2c;
+                  font-weight: 400;
+                  caret-color: #2563eb;
+                  outline: none;
+                  border-radius: 28px;
             }
 
-            button[type="submit"]:hover {
-                  opacity: 0.88;
-                  transform: translateY(-1px);
+            textarea::placeholder {
+                  color: #9aa9bc;
+                  font-weight: 350;
+                  font-size: 1rem;
             }
 
-            button[type="submit"]:active {
-                  transform: translateY(0);
-                  opacity: 1;
-            }
-
-            /* Result section */
-            .result-section {
-                  margin-top: 2rem;
-                  border-top: 1px solid var(--border);
-                  padding-top: 2rem;
-                  animation: fadeUp 0.5s ease both;
-            }
-
-            .result-row {
+            /* suggestion header */
+            .suggestion-header {
                   display: flex;
-                  gap: 1rem;
-                  align-items: stretch;
+                  align-items: baseline;
+                  justify-content: space-between;
+                  margin: 1.2rem 0.4rem 0.7rem 0.4rem;
             }
 
-            .result-box {
-                  flex: 1;
-                  background: var(--bg);
-                  border: 1px solid var(--border);
-                  border-radius: 12px;
-                  padding: 1.2rem 1.4rem;
-            }
-
-            .result-box .box-label {
-                  font-size: 0.62rem;
-                  letter-spacing: 0.16em;
-                  text-transform: uppercase;
-                  color: var(--muted);
-                  margin-bottom: 0.5rem;
-            }
-
-            .result-box .box-value {
-                  font-family: 'Syne', sans-serif;
-                  font-size: 1.35rem;
-                  font-weight: 700;
-                  word-break: break-word;
-            }
-
-            .result-box.predicted {
-                  border-color: rgba(200, 240, 74, 0.35);
-                  background: var(--accent-dim);
-            }
-
-            .result-box.predicted .box-value {
-                  color: var(--accent);
-            }
-
-            .arrow {
+            .suggestion-header h2 {
+                  font-size: 1.2rem;
+                  font-weight: 510;
+                  color: #1e293b;
+                  letter-spacing: -0.01em;
                   display: flex;
                   align-items: center;
-                  color: var(--muted);
-                  font-size: 1.1rem;
-                  flex-shrink: 0;
+                  gap: 6px;
             }
 
-            .divider {
-                  margin: 0.5rem 0;
+            .suggestion-header h2 svg {
+                  opacity: 0.7;
+            }
+
+            .info-chip {
+                  background: #e6edf6;
+                  padding: 0.2rem 1rem;
+                  border-radius: 30px;
+                  font-size: 0.8rem;
+                  font-weight: 450;
+                  color: #2c3f5c;
+                  border: 1px solid #fff;
+            }
+
+            /* prediction chips */
+            .prediction-grid {
+                  display: flex;
+                  flex-wrap: wrap;
+                  gap: 0.7rem;
+                  margin-bottom: 2rem;
+                  padding: 0.4rem 0;
+                  min-height: 4.5rem;
+                  align-items: center;
+            }
+
+            .word-chip {
+                  background: #ffffffec;
+                  border: 1px solid rgba(255, 255, 255, 0.8);
+                  backdrop-filter: blur(4px);
+                  padding: 0.7rem 1.6rem;
+                  border-radius: 50px;
+                  font-size: 1.1rem;
+                  font-weight: 460;
+                  color: #0c203a;
+                  box-shadow: 0 4px 10px -3px rgba(0, 20, 30, 0.15), 0 0 0 1px rgba(148, 176, 214, 0.2);
+                  cursor: pointer;
+                  transition: all 0.15s ease;
+                  line-height: 1.2;
+                  letter-spacing: -0.01em;
+                  user-select: none;
+            }
+
+            .word-chip:hover {
+                  background: #ffffff;
+                  transform: translateY(-2px);
+                  box-shadow: 0 12px 18px -10px #1e3f6e30, 0 0 0 1px #bed5ff;
+                  color: #0d2849;
+            }
+
+            .word-chip:active {
+                  transform: translateY(0px);
+                  background: #f0f6ff;
+                  transition: 0.05s;
+            }
+
+            .word-chip.none-chip {
+                  background: #eaf0f8b3;
+                  color: #5f748e;
+                  font-weight: 380;
+                  border: 1px dashed #b9c7da;
+                  box-shadow: none;
+                  cursor: default;
+                  backdrop-filter: blur(4px);
+            }
+
+            .word-chip.none-chip:hover {
+                  transform: none;
+                  background: #eaf0f8b3;
+                  box-shadow: none;
+                  border: 1px dashed #b9c7da;
+            }
+
+            /* action bar */
+            .action-row {
+                  display: flex;
+                  flex-wrap: wrap;
+                  align-items: center;
+                  justify-content: space-between;
+                  margin-top: 1rem;
+                  border-top: 1px solid #dbe5f0;
+                  padding-top: 1.5rem;
+            }
+
+            .left-actions {
+                  display: flex;
+                  gap: 0.8rem;
+            }
+
+            .btn {
+                  background: #ffffffdb;
+                  border: 1px solid #dae3f0;
+                  padding: 0.6rem 1.2rem;
+                  border-radius: 40px;
+                  font-size: 0.9rem;
+                  font-weight: 470;
+                  color: #1f3a64;
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 0.5rem;
+                  cursor: pointer;
+                  transition: background 0.1s, border-color 0.1s, box-shadow 0.1s;
+                  box-shadow: 0 2px 5px #b0c7e010;
+                  backdrop-filter: blur(4px);
+            }
+
+            .btn:hover {
+                  background: #ffffff;
+                  border-color: #adc6ec;
+                  box-shadow: 0 7px 12px -8px #1d3b5e30;
+            }
+
+            .btn:active {
+                  background: #eef3fd;
+                  transform: scale(0.97);
+            }
+
+            .status-note {
+                  font-size: 0.85rem;
+                  color: #5b6f8b;
+                  background: #ecf3fa;
+                  padding: 0.3rem 1.2rem;
+                  border-radius: 30px;
+                  border: 1px solid #fff;
+            }
+
+            /* tiny loading / decoration */
+            .cursor-glow {
+                  display: inline-block;
+                  width: 6px;
+                  height: 1.1rem;
+                  background: #3870e0;
+                  border-radius: 6px;
+                  margin-left: 2px;
+                  animation: pulse 1.2s infinite;
+            }
+
+            @keyframes pulse {
+                  0% {
+                        opacity: 0.3;
+                  }
+
+                  50% {
+                        opacity: 1;
+                  }
+
+                  100% {
+                        opacity: 0.3;
+                  }
+            }
+
+            .footer-note {
+                  text-align: right;
+                  font-size: 0.75rem;
+                  color: #6f85a2;
+                  margin-top: 0.5rem;
+                  opacity: 0.7;
+            }
+
+            /* simple responsiveness */
+            @media (max-width: 500px) {
+                  .card {
+                        padding: 1.8rem 1.5rem;
+                  }
+
+                  .word-chip {
+                        padding: 0.6rem 1.2rem;
+                        font-size: 1rem;
+                  }
             }
       </style>
 </head>
 
 <body>
       <div class="card">
-            <div class="label-tag">NLP · Language Model</div>
-            <h1>Next <span>Word</span><br>Predictor</h1>
-            <p class="subtitle">Type text, get the most likely continuation.</p>
+            <h1>
+                  ✦ next word
 
-            <form action="/predict" method="post">
-                  <div class="input-group">
-                        <input type="text" name="word" placeholder="e.g. The weather today is..." autocomplete="off"
-                              value="{{ word if word else '' }}">
-                  </div>
-                  <button type="submit">Predict Next Word →</button>
-            </form>
+            </h1>
+            <div class="sub">type naturally – suggestions appear below</div>
 
-            {% if prediction %}
-            <div class="result-section">
-                  <div class="result-box predicted">
-                        <div class="box-label">Output</div>
-                        <div class="box-value">{{ word }} <span style="color: var(--accent);">{{ prediction }}</span>
-                        </div>
+            <!-- text input area -->
+            <div class="input-section">
+                  <div class="textarea-wrapper">
+                        <textarea id="inputText"
+                              placeholder="e.g. &quot;I am looking forward to&quot; or &quot;She walked into the&quot; ..."
+                              autofocus>She walked into the</textarea>
                   </div>
             </div>
-            {% endif %}
+
+            <!-- prediction header -->
+            <div class="suggestion-header">
+                  <h2>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1e3a5f" stroke-width="1.8"
+                              stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M5 12h14" />
+                              <path d="M12 5l7 7-7 7" />
+                        </svg>
+                        what comes next?
+                  </h2>
+                  <div class="info-chip" id="wordCountHint">based on common patterns</div>
+            </div>
+
+            <!-- prediction chips (dynamic) -->
+            <div class="prediction-grid" id="predictionContainer">
+                  <!-- JS will fill this -->
+                  <div class="word-chip none-chip">loading suggestions ...</div>
+            </div>
+
+            <!-- bottom actions -->
+            <div class="action-row">
+                  <div class="left-actions">
+                        <div class="btn" id="clearBtn">
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8">
+                                    <path d="M3 6h18" />
+                                    <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6" />
+                                    <path d="M8 4V2h8v2" />
+                              </svg>
+                              clear text
+                        </div>
+                        <div class="btn" id="resetExampleBtn">
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8">
+                                    <path d="M1 4v6h6" />
+                                    <path d="M3.51 14a9 9 0 102.13-9.36L1 10" />
+                              </svg>
+                              example
+                        </div>
+                  </div>
+                  <div class="status-note" id="typingStatus">
+                        <span id="wordCounter">3</span> words · ready
+                  </div>
+            </div>
+            <div class="footer-note">click any suggestion to insert</div>
       </div>
+
+      <script>
+            (function () {
+                  // ---------- clean mock prediction engine ----------
+                  // bigram/trigram style: last few words decide suggestions
+                  const COMMON_NEXT = new Map([
+                        // generic sentence completions
+                        ['the', ['next', 'first', 'same', 'only', 'best', 'new', 'end']],
+                        ['to', ['be', 'go', 'see', 'get', 'make', 'have', 'the']],
+                        ['and', ['the', 'then', 'also', 'he', 'she', 'they', 'we']],
+                        ['a', ['few', 'lot', 'little', 'great', 'new', 'good', 'man']],
+                        ['of', ['the', 'course', 'life', 'them', 'all', 'his', 'her']],
+                        ['in', ['the', 'front', 'order', 'fact', 'love', 'vain']],
+                        ['for', ['the', 'a', 'his', 'her', 'me', 'us', 'them']],
+                        ['with', ['the', 'his', 'her', 'me', 'us', 'some', 'each']],
+                        ['on', ['the', 'a', 'his', 'my', 'top', 'earth', 'purpose']],
+                        ['at', ['the', 'first', 'last', 'all', 'night', 'once']],
+                        ['was', ['a', 'the', 'not', 'very', 'just', 'there', 'born']],
+                        ['is', ['a', 'the', 'not', 'very', 'also', 'now', 'one']],
+                        ['are', ['you', 'they', 'not', 'the', 'very', 'some']],
+                        ['you', ['are', 'can', 'will', 'have', 'know', 'see', 'go']],
+                        ['i', ['am', 'have', 'was', 'will', 'think', 'want', 'went']],
+                        ['he', ['was', 'is', 'had', 'said', 'could', 'went', 'came']],
+                        ['she', ['was', 'is', 'had', 'said', 'could', 'looked', 'went']],
+                        ['they', ['were', 'are', 'will', 'have', 'can', 'came', 'went']],
+                        ['we', ['are', 'will', 'can', 'have', 'need', 'want', 'went']],
+                        ['have', ['a', 'the', 'been', 'to', 'you', 'it', 'them']],
+                        ['not', ['the', 'a', 'very', 'only', 'just', 'even']],
+                        ['will', ['be', 'have', 'come', 'go', 'see', 'take', 'make']],
+                        // phrase based: last two words (simple)
+                        ['going to', ['be', 'the', 'see', 'make', 'take', 'have', 'meet']],
+                        ['to be', ['a', 'the', 'honest', 'sure', 'fair', 'seen', 'continued']],
+                        ['looking forward', ['to', 'for']],
+                        ['forward to', ['seeing', 'meeting', 'hearing', 'the', 'it']],
+                        ['walked into', ['the', 'a', 'an', 'her', 'his', 'my']],
+                        ['into the', ['room', 'house', 'dark', 'night', 'garden', 'office']],
+                        ['the room', ['was', 'is', 'had', 'felt', 'looked', 'smelled']],
+                        ['room was', ['empty', 'dark', 'quiet', 'bright', 'messy', 'cold']],
+                        ['lot of', ['fun', 'people', 'work', 'things', 'trouble', 'love']],
+                        ['of the', ['day', 'world', 'best', 'same', 'most', 'city']],
+                        ['to the', ['store', 'park', 'office', 'door', 'window', 'beach']],
+                        ['end of', ['the', 'this', 'his', 'her', 'our', 'day']],
+                        ['of this', ['world', 'year', 'month', 'week', 'trial', 'era']],
+                        ['one of', ['the', 'my', 'those', 'these', 'them', 'us']],
+                        ['there was', ['a', 'no', 'an', 'nothing', 'someone', 'silence']],
+                        ['was a', ['man', 'woman', 'day', 'time', 'moment', 'dream']],
+                        ['it was', ['a', 'the', 'very', 'too', 'not', 'just', 'really']],
+                        ['in the', ['morning', 'evening', 'house', 'car', 'city', 'corner']],
+                  ]);
+
+                  // if we have no rule, fallback to generic english flavour
+                  const FALLBACK_SUGGESTIONS = ['the', 'and', 'for', 'with', 'that', 'this', 'from'];
+
+                  // DOM elements
+                  const textarea = document.getElementById('inputText');
+                  const predictionContainer = document.getElementById('predictionContainer');
+                  const wordCountSpan = document.getElementById('wordCounter');
+                  const typingStatus = document.getElementById('typingStatus');
+                  const wordCountHint = document.getElementById('wordCountHint');
+                  const clearBtn = document.getElementById('clearBtn');
+                  const resetExampleBtn = document.getElementById('resetExampleBtn');
+
+                  // helper: get last 1 or 2 words as key
+                  function getLastWordsKey(text) {
+                        const words = text.trim().split(/\s+/);
+                        if (words.length === 0 || (words.length === 1 && words[0] === '')) return null;
+                        // get last two (if available) for better suggestions
+                        if (words.length >= 2) {
+                              const lastTwo = words.slice(-2).join(' ').toLowerCase();
+                              // also return last single as alternative
+                              return { lastTwo, lastOne: words[words.length - 1].toLowerCase() };
+                        } else {
+                              const lastOne = words[words.length - 1].toLowerCase();
+                              return { lastOne, lastTwo: null };
+                        }
+                  }
+
+                  // core prediction function
+                  function generatePredictions(text) {
+                        const trimmed = text.trim();
+                        if (trimmed === '') {
+                              return { suggestions: ['type', 'something', 'wonderful'], source: 'welcome' };
+                        }
+
+                        const keys = getLastWordsKey(trimmed);
+                        if (!keys) return { suggestions: ['hello', 'world', 'start'], source: 'empty' };
+
+                        let suggestionSet = null;
+
+                        // 1) try lastTwo if exists
+                        if (keys.lastTwo && COMMON_NEXT.has(keys.lastTwo)) {
+                              suggestionSet = COMMON_NEXT.get(keys.lastTwo);
+                        }
+                        // 2) else try lastOne
+                        if (!suggestionSet && keys.lastOne && COMMON_NEXT.has(keys.lastOne)) {
+                              suggestionSet = COMMON_NEXT.get(keys.lastOne);
+                        }
+                        // 3) if lastOne also fails, use fallback
+                        if (!suggestionSet) {
+                              suggestionSet = FALLBACK_SUGGESTIONS;
+                        }
+
+                        // if we have a short list, pad with a bit of variety (remove duplicates)
+                        let base = [...suggestionSet];
+                        // mix in a few extra for flavour, avoid too many duplicates
+                        if (base.length < 4) {
+                              base = [...new Set([...base, ...FALLBACK_SUGGESTIONS])];
+                        }
+                        // limit to 5..6 chips for clean UI
+                        const suggestions = base.slice(0, 6);
+                        return { suggestions, source: 'model' };
+                  }
+
+                  // simple debounce to avoid flooding backend
+                  function debounce(fn, wait) {
+                        let t = null;
+                        return function (...args) {
+                              clearTimeout(t);
+                              t = setTimeout(() => fn.apply(this, args), wait);
+                        };
+                  }
+
+                  // update chip area + word counter — always use backend LSTM predictions
+                  async function refreshUI() {
+                        const text = textarea.value;
+                        // update word counter
+                        const words = text.trim() === '' ? [] : text.trim().split(/\s+/);
+                        const wordCount = words.length;
+                        wordCountSpan.textContent = wordCount;
+
+                        if (wordCount === 0) {
+                              wordCountHint.textContent = 'no words yet';
+                              predictionContainer.innerHTML = `<div class="word-chip none-chip">type something...</div>`;
+                              return;
+                        } else if (wordCount === 1) {
+                              wordCountHint.textContent = 'last word: "' + words[words.length - 1] + '"';
+                        } else {
+                              wordCountHint.textContent = 'last: "' + words.slice(-2).join(' ') + '"';
+                        }
+
+                        // show loading state while awaiting server
+                        predictionContainer.innerHTML = `<div class="word-chip none-chip">loading suggestions ...</div>`;
+                        typingStatus.textContent = wordCount + ' words · loading';
+
+                        // always request suggestions from backend LSTM
+                        let suggestions = null;
+                        try {
+                              const resp = await fetch('http://127.0.0.1:8000/predict', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ word: text })
+                              });
+
+                              if (!resp.ok) {
+                                    const err = await resp.json().catch(() => null);
+                                    const msg = err && err.detail ? err.detail : 'server error';
+                                    predictionContainer.innerHTML = `<div class="word-chip none-chip">${msg}</div>`;
+                                    typingStatus.textContent = wordCount + ' words · error';
+                                    return;
+                              }
+
+                              const body = await resp.json();
+                              if (body && body.prediction) {
+                                    suggestions = Array.isArray(body.prediction) ? body.prediction : [body.prediction];
+                              }
+                        } catch (e) {
+                              predictionContainer.innerHTML = `<div class="word-chip none-chip">server unavailable</div>`;
+                              typingStatus.textContent = wordCount + ' words · offline';
+                              return;
+                        } finally {
+                              typingStatus.textContent = wordCount + ' words · ready';
+                        }
+
+                        if (!suggestions || suggestions.length === 0) {
+                              predictionContainer.innerHTML = `<div class="word-chip none-chip">…</div>`;
+                              return;
+                        }
+
+                        let chipsHtml = '';
+                        for (let word of suggestions) {
+                              const displayWord = word;
+                              chipsHtml += `<div class="word-chip" data-word="${word}">${displayWord}</div>`;
+                        }
+                        predictionContainer.innerHTML = chipsHtml;
+
+                        // attach click listeners to chips
+                        document.querySelectorAll('.word-chip[data-word]').forEach(chip => {
+                              // left-click inserts suggestion
+                              chip.addEventListener('click', function (e) {
+                                    const word = this.getAttribute('data-word');
+                                    insertSuggestion(word);
+                              });
+
+                              // right-click removes all occurrences of that word from textarea
+                              chip.addEventListener('contextmenu', function (e) {
+                                    e.preventDefault();
+                                    const word = this.getAttribute('data-word');
+                                    removeWordFromTextarea(word);
+                              });
+                        });
+                  }
+
+                  // insert suggestion at end with space handling
+                  function insertSuggestion(word) {
+                        let currentText = textarea.value;
+                        // trim right spaces
+                        currentText = currentText.replace(/\s+$/, '');
+                        // append space if needed
+                        if (currentText.length > 0 && !currentText.endsWith(' ')) {
+                              currentText += ' ';
+                        }
+                        textarea.value = currentText + word + ' ';
+                        // move cursor to end (native focus + set)
+                        textarea.focus();
+                        // force UI update
+                        refreshUI();
+                  }
+
+                  // remove ALL whole-word occurrences of `word` from the textarea
+                  function removeWordFromTextarea(word) {
+                        if (!word) return;
+                        const pattern = new RegExp('\\b' + escapeRegExp(word) + '\\b', 'gi');
+                        textarea.value = textarea.value.replace(pattern, '').replace(/\s{2,}/g, ' ').trim() + (textarea.value.trim().length > 0 ? ' ' : '');
+                        textarea.focus();
+                        refreshUI();
+                  }
+
+                  function escapeRegExp(string) {
+                        return string.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&');
+                  }
+
+                  // event listeners
+                  textarea.addEventListener('input', debounce(refreshUI, 300));
+                  textarea.addEventListener('keyup', (e) => {
+                        // optional: refresh on keyup, but input is enough.
+                        // just ensure any change like backspace triggers refresh.
+                  });
+
+                  // debounce intentionally used to avoid rapid requests
+
+                  // clear button
+                  clearBtn.addEventListener('click', () => {
+                        textarea.value = '';
+                        refreshUI();
+                        textarea.focus();
+                  });
+
+                  // reset to a nice example
+                  resetExampleBtn.addEventListener('click', () => {
+                        textarea.value = 'She walked into the ';
+                        refreshUI();
+                        textarea.focus();
+                  });
+
+                  // additional caret handling: click suggestion inserts
+
+                  // also update on any change (for safety)
+                  window.addEventListener('load', () => {
+                        refreshUI();
+                  });
+
+                  // detect if textarea changes programmatically
+                  new MutationObserver(() => refreshUI()).observe(textarea, { attributes: true, attributeFilter: ['value'] });
+
+                  // initial refresh
+                  refreshUI();
+
+                  // optional: adjust info on focus
+                  textarea.addEventListener('focus', () => {
+                        // subtle background effect: just for fun – no logic needed
+                  });
+            })();
+      </script>
 </body>
 
 </html>

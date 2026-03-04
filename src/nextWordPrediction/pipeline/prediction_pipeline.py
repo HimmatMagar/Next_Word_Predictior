@@ -23,10 +23,19 @@ class PredictionPipeline:
 
 
       def predict_next_word(self, data):
-            prediction_index = np.argmax(self.model.predict(data))
-
-            for word, index in self.tokenizer.word_index.items():
-                  if index == prediction_index:
-                        return word
+            predictions = self.model.predict(data)
+            # Get probabilities for the last sequence (batch size = 1)
+            probs = predictions[0]
             
-            return None
+            # Get indices of top 5 highest probabilities
+            top_5_indices = np.argsort(probs)[-5:][::-1]
+            
+            # Map indices back to words
+            top_5_words = []
+            for idx in top_5_indices:
+                  for word, word_idx in self.tokenizer.word_index.items():
+                        if word_idx == idx:
+                              top_5_words.append(word)
+                              break
+            
+            return top_5_words if top_5_words else None

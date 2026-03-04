@@ -1,14 +1,24 @@
+import os
 import pandas as pd
+from fastapi import FastAPI, HTTPException
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 from typing import Annotated
 from pydantic import Field, BaseModel
-from fastapi import FastAPI, Request, Form
-from fastapi.templating import Jinja2Templates
 from src.nextWordPrediction.pipeline.prediction_pipeline import PredictionPipeline
 
 
 app = FastAPI()
 
-templates = Jinja2Templates(directory="templates")
+# Enable CORS for all origins
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 class Input(BaseModel):
@@ -16,26 +26,46 @@ class Input(BaseModel):
 
 
 @app.get("/")
-def home(request: Request):
-      return templates.TemplateResponse("index.html", {"request": request})
+async def home():
+      return FileResponse("templates/index.html")
+
+
+
+@app.get("/training")
+async def training():
+      os.system("main.py")
+      return {"message": "Training endpoint is under development. Please check back later."}
+
 
 prediction_pipeline = PredictionPipeline()
 @app.post("/predict")
-def prediction(request: Request, word: str = Form(...)):
+async def prediction(UserInput: Input):
+      text = (UserInput.word or "").strip()
+      if not text:
+            raise HTTPException(status_code=422, detail="'word' must be a non-empty string")
 
-      user_input = Input(word=word)
-      data = pd.DataFrame([{
-            "text": user_input.word
-      }])
+      try:
+            data = pd.DataFrame([{"text": text}])
+            input_seq = prediction_pipeline.transform_input(data=data)
+            pred = prediction_pipeline.predict_next_word(input_seq)
 
-      input_seq = prediction_pipeline.transform_input(data=data)
+            # make prediction JSON-serializable
+            try:
+                  import numpy as _np
+                  if isinstance(pred, _np.ndarray):
+                        serial_pred = pred.tolist()
+                  else:
+                        serial_pred = pred
+            except Exception:
+                  serial_pred = pred
 
-      pred = prediction_pipeline.predict_next_word(input_seq)
-      return templates.TemplateResponse(
-            "index.html",
-            {
-                  "request": request,
-                  "prediction": pred
+            return {
+                  "status": "success",
+                  "input": text,
+                  "prediction": serial_pred
             }
-      )
+      except HTTPException:
+            raise
+      except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
 
