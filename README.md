@@ -44,8 +44,8 @@ Next_Word_Predictior/
 
 2. Create and activate virtual environment:
    ```bash
-   python -m venv env
-   source env/Scripts/activate  # Windows
+   conda create -p env python==3.12 -y
+   conda activate env/  # Windows
    ```
 
 3. Install dependencies:
