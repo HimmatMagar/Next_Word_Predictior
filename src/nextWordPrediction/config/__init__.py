@@ -1,6 +1,6 @@
-from src.nextWordPrediction.utils import *
-from src.nextWordPrediction.constants import __CONFIG__, __PARAMS__
-from src.nextWordPrediction.entity import DataIngestionConfig, DataTransformationConfig, ModelBuildingConfig
+from nextWordPrediction.utils import *
+from nextWordPrediction.constants import __CONFIG__, __PARAMS__
+from nextWordPrediction.entity import DataIngestionConfig, DataTransformationConfig, ModelBuildingConfig
 
 
 class ConfigManager:
@@ -47,7 +47,6 @@ class ConfigManager:
             create_directory([config.root_dir])
             data_transformation_config = DataTransformationConfig(
                   root_dir=config.root_dir,
-                  vocab_size=params.max_vocab,
                   seq_len = params.seq_len,
                   data_file_path=config.data_file_path
             )
@@ -73,15 +72,12 @@ class ConfigManager:
                   input_file=config.input_file_path,
                   output_file=config.output_file_path,
                   model=config.model,
-                  vocab_size=params.max_vocab,
                   seq_length=params.seq_len,
                   lstm_unit=params.lstm_unit,
                   embedding_units=params.embedding_units,
-                  optimizer=params.optimizer,
                   epochs= params.epochs,
                   batch_size=params.batch_size,
-                  spliting=params.spliting,
-                  activation=params.activation
+                  learning_rate = params.learning_rate
             )
 
             return model_building_config

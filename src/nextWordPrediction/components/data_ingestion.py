@@ -1,8 +1,8 @@
 import os
 import zipfile
 import urllib.request as req
-from src.nextWordPrediction import logger
-from src.nextWordPrediction.entity import DataIngestionConfig
+from nextWordPrediction import logger
+from nextWordPrediction.entity import DataIngestionConfig
 
 
 class DataIngestion:

@@ -12,7 +12,6 @@ class DataIngestionConfig:
 @dataclass(frozen=True)
 class DataTransformationConfig:
       root_dir: Path
-      vocab_size: int
       seq_len: int
       data_file_path: Path
 
@@ -22,12 +21,9 @@ class ModelBuildingConfig:
       input_file: Path
       output_file: Path
       model: Path
-      vocab_size: int
       seq_length: int
       lstm_unit: int
       embedding_units: int
-      optimizer: str
       epochs: int
       batch_size: int
-      spliting: int
-      activation: str
+      learning_rate: float

@@ -10,4 +10,7 @@ uvicorn
 pydantic
 notebook
 nltk
+mlflow
+dagshub
+dvc
 -e .

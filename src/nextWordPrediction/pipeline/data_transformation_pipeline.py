@@ -1,6 +1,6 @@
-from src.nextWordPrediction import logger
-from src.nextWordPrediction.config import ConfigManager
-from src.nextWordPrediction.components.data_transformation import DataTransform
+from nextWordPrediction import logger
+from nextWordPrediction.config import ConfigManager
+from nextWordPrediction.components.data_transformation import DataTransform
 
 stage_name = "Data Transformation Stage"
 
@@ -12,8 +12,7 @@ class DataTransformPipeline():
             config = ConfigManager()
             data_transform_config = config.get_data_transform_config()
             data_transform = DataTransform(data_transform_config)
-            data_transform.cleaning_pipeline()
-
+            data_transform.final_output()
 
 if __name__ == "__main__":
       try:

@@ -1,13 +1,10 @@
 import re
 import os
 import pickle
-import numpy as np
-import pandas as pd
-from keras.utils import to_categorical
-from src.nextWordPrediction import logger
-from keras.preprocessing.sequence import pad_sequences
-from tensorflow.keras.preprocessing.text import Tokenizer
-from src.nextWordPrediction.config import DataTransformationConfig
+from nltk import word_tokenize
+from collections import Counter
+from nextWordPrediction import logger
+from nextWordPrediction.config import DataTransformationConfig
 
 
 class DataTransform:
@@ -16,73 +13,82 @@ class DataTransform:
       
       def load_data(self):
             """
-                  It load the data from the configuration and convert it into pandas data frame
+                  It load the data from the configuration
                   
                   Return:
-                        It return the pandas dataframe
+                        It return the text
             """
-            df = pd.read_csv(self.config.data_file_path)
-            return df
+            try:
+                  with open(self.config.data_file_path, 'r', encoding='utf-8') as f:
+                        text = f.read()
+                        return text
+            except FileNotFoundError as e:
+                  raise e
 
 
       def clean_text(self, text: str) -> str:
-            """
-                  Removes punctuation and numbers from text.
-                  
-                  Args:
-                        text (str): Input text
-                        
-                  Returns:
-                        str: Cleaned text with only letters and spaces
-            """
-
             if isinstance(text, str):
-                  text = re.sub(r'[^a-zA-Z\s]', '', text)  
-                  text = re.sub(r'\s+', ' ', text)         
-                  return text.lower().strip()          
+                  text = re.sub(r'http\S+|www\.\S+', '', text)   # remove URLs
+                  text = re.sub(r'[^a-zA-Z\s]', '', text)        # remove punctuation & numbers
+                  text = re.sub(r'\n+', ' ', text)                # remove newlines → single space
+                  text = re.sub(r'\s+', ' ', text)                # collapse multiple spaces
             return text
+      
+      
+      def text_to_indices(self, sentence, vocab):
+            numeric_sentence = []
 
+            for token in sentence:
+                  if token in vocab:
+                        numeric_sentence.append(vocab[token])
+                  else:
+                        numeric_sentence.append(vocab['<UNK>'])
+            return numeric_sentence
+      
 
-      def cleaning_pipeline(self):
-            data = self.load_data()
+      def build_vocab(self, text):
+            tokens = word_tokenize(text)
+            vocab = {
+                  "<UNK>":0
+            }
 
-            cleaned_data = data['quote'].apply(self.clean_text).tolist()
+            for token in Counter(tokens).keys():
+                  if token not in vocab:
+                        vocab[token] = len(vocab)
+            return vocab
+      
 
-            tokenizer = Tokenizer(num_words=self.config.vocab_size)
-            tokenizer.fit_on_texts(cleaned_data)
-            sequence = tokenizer.texts_to_sequences(cleaned_data)
-
-            X = []
+      def build_sequence(self, indices, seq_len):
+            x = []
             y = []
 
-            for seq in sequence:
-                  if len(seq) < 2:
-                        continue
+            for i in range(len(indices) - seq_len):
+                  input_seq = indices[i : i + seq_len]
+                  target = indices[i + seq_len]
 
-                  for i in range(1, len(seq)):
-                        x_input = seq[:i]
-                        y_output = seq[i]
-                        X.append(x_input)
-                        y.append(y_output)
-            
-            input_seq = pad_sequences(
-                  sequences=X,
-                  maxlen=self.config.seq_len,
-                  padding='pre'
-            )
+                  x.append(input_seq)
+                  y.append(target)
+            return x, y
 
-            y_out = np.array(y)
-            y_one_hot = to_categorical(
-                  y_out, num_classes=self.config.vocab_size
-            )
 
-            with open(os.path.join(self.config.root_dir, "input_seq.pkl"), "wb") as f:
-                  pickle.dump(input_seq, f)
+      def final_output(self):
+            try:
+                  data = self.load_data()
+                  text = self.clean_text(data)
+                  vocab = self.build_vocab(text)
 
-            with open(os.path.join(self.config.root_dir, "output.pkl"), "wb") as f:
-                  pickle.dump(y_one_hot, f)
+                  numeric_sentence = self.text_to_indices(word_tokenize(text), vocab)
 
-            with open(os.path.join(self.config.root_dir, "tokenizer.pkl"), "wb") as f:
-                  pickle.dump(tokenizer, f)
+                  x, y = self.build_sequence(numeric_sentence, self.config.seq_len)
+                  with open(os.path.join(self.config.root_dir, "input.pkl"), "wb") as f:
+                        pickle.dump(x, f)
 
-            logger.info("Data Transormation is completed")
+                  with open(os.path.join(self.config.root_dir, "output.pkl"), "wb") as f:
+                        pickle.dump(y, f)
+
+                  with open(os.path.join(self.config.root_dir, "tokenizer.pkl"), "wb") as f:
+                        pickle.dump(vocab, f)
+
+                  logger.info("Data Transormation is completed")
+            except Exception as e:
+                  raise e

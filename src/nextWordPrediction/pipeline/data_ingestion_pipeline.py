@@ -1,6 +1,6 @@
-from src.nextWordPrediction import logger
-from src.nextWordPrediction.config import ConfigManager
-from src.nextWordPrediction.components.data_ingestion import DataIngestion
+from nextWordPrediction import logger
+from nextWordPrediction.config import ConfigManager
+from nextWordPrediction.components.data_ingestion import DataIngestion
 
 stage_name = "Data Ingestion Stage"
 

@@ -1,10 +1,6 @@
 import setuptools
 
 
-with open("README.md", 'r', encoding='UTF-8') as f:
-      long_description = f.read()
-
-
 __version__ = "0.0.0.0"
 
 
@@ -19,7 +15,6 @@ setuptools.setup(
       author=AUTHOR_NAME,
       author_email=AUTHOR_EMAIL,
       description="End to End DL implementation for Next Word Prediction",
-      long_description=long_description,
       long_description_content_type='text/markdown',
       url=f"https://github.com/{AUTHOR_NAME}/{REPO_NAME}",
       project_urls={

@@ -1,17 +1,17 @@
-ariticate_root: artificate
+ariticate_root: artifact
 
 data_ingestion:
-  root_dir: artificate/data_ingestion
-  source_url: "https://github.com/HimmatMagar/datae/raw/refs/heads/main/quotes.zip"
-  ziped_data_path: artificate/data_ingestion/data.zip
-  unziped_file: artificate/data_ingestion
+  root_dir: artifact/data_ingestion
+  source_url: "https://github.com/HimmatMagar/datae/raw/refs/heads/main/text.zip"
+  ziped_data_path: artifact/data_ingestion/data.zip
+  unziped_file: artifact/data_ingestion
 
 data_transformation:
-  root_dir: artificate/data_transformation
-  data_file_path: artificate/data_ingestion/quotes.csv
+  root_dir: artifact/data_transformation
+  data_file_path: artifact/data_ingestion/1661-0.txt
 
 model_building:
-  root_dir: artificate/build_model
-  input_file_path: artificate/data_transformation/input_seq.pkl
-  output_file_path: artificate/data_transformation/output.pkl
-  model: model.h5
+  root_dir: artifact/build_model
+  input_file_path: artifact/data_transformation/input.pkl
+  output_file_path: artifact/data_transformation/output.pkl
+  model: model.pth
