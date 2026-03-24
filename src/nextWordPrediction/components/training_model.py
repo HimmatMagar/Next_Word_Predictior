@@ -31,6 +31,7 @@ class TrainModel:
             optimizer = torch.optim.Adam(params=model.parameters(), lr=self.config.learning_rate)
             chunk = self.prepare_data()
 
+
             for i in range(self.config.epochs):
                   total_loss = 0
 
@@ -45,6 +46,9 @@ class TrainModel:
                         total_loss += loss.item()
                   print(f"Epochs {i}: Loss {total_loss / len(chunk)}")
             model_path = os.path.join(self.config.root_dir, self.config.model)
-            torch.save(model_path)
-
+            with open(model_path, "wb") as f:
+                  torch.save(model, f)
             logger.info(f"PyTorch model saved in {model_path}")
+            
+            loss = total_loss/len(chunk)
+            return model, loss

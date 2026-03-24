@@ -45,8 +45,7 @@ async def prediction(UserInput: Input):
             raise HTTPException(status_code=422, detail="'word' must be a non-empty string")
 
       try:
-            data = pd.DataFrame([{"text": text}])
-            input_seq = prediction_pipeline.transform_input(data=data)
+            input_seq = prediction_pipeline.transform_input(text)
             pred = prediction_pipeline.predict_next_word(input_seq)
 
             # make prediction JSON-serializable

@@ -4,7 +4,7 @@ import json
 import pickle
 from pathlib import Path
 from box.config_box import ConfigBox
-from src.nextWordPrediction import logger
+from nextWordPrediction import logger
 from ensure import ensure_annotations
 from box.exceptions import BoxValueError
 

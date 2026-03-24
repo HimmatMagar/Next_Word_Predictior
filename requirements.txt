@@ -13,4 +13,3 @@ nltk
 mlflow
 dagshub
 dvc
--e .

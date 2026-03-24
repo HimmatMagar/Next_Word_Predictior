@@ -1,0 +1,30 @@
+stages:
+  data_ingestion:
+    cmd: python src/nextWordPrediction/pipeline/data_ingestion_pipeline.py
+    deps:
+      - src/nextWordPrediction/components/data_ingestion.py
+      - config/config.yaml
+    outs:
+      - artifact/data_ingestion/1661-0.txt
+    
+  data_transformation:
+    cmd: python src/nextWordPrediction/pipeline/data_transformation_pipeline.py
+    deps:
+      - src/nextWordPrediction/components/data_transformation.py
+      - config/config.yaml
+      - artifact/data_ingestion/1661-0.txt
+    outs:
+      - artifact/data_transformation/input.pkl
+      - artifact/data_transformation/output.pkl
+      - artifact/data_transformation/tokenizer.pkl
+  
+  model_building:
+    cmd: python src/nextWordPrediction/pipeline/model_building_pipeline.py
+    deps:
+      - src/nextWordPrediction/components/training_model.py
+      - config/config.yaml
+      - artifact/data_transformation/input.pkl
+      - artifact/data_transformation/output.pkl
+    outs:
+      - artifact/build_model/model.pth
+    

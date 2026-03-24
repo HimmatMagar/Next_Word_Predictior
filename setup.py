@@ -10,7 +10,7 @@ SRC_REPO = "nextWordPrediction"
 AUTHOR_EMAIL = "himmatmagar007@gmail.com"
 
 setuptools.setup(
-      name="Next Word Prediction",
+      name="nextWordPrediction",
       version=__version__,
       author=AUTHOR_NAME,
       author_email=AUTHOR_EMAIL,

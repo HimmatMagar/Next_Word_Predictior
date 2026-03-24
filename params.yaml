@@ -4,5 +4,4 @@ parameter:
   lstm_unit: 32
   epochs: 50
   batch_size: 32
-  spliting: 0.25
   learning_rate: 0.001
