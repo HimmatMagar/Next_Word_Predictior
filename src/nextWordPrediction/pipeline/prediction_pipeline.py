@@ -7,6 +7,7 @@ from nltk import word_tokenize
 
 class PredictionPipeline:
       def __init__(self):
+            self.device = "mps" if torch.backends.mps.is_available() else "cpu"
             client = MlflowClient()
 
             champion = client.get_model_version_by_alias(
@@ -15,7 +16,7 @@ class PredictionPipeline:
             )
             run_id = champion.run_id
 
-            self.model = mlflow.pytorch.load_model("models:/pytorch-model@champion")
+            self.model = mlflow.pytorch.load_model("models:/pytorch-model@champion", map_location=self.device)
 
             vocab_path = mlflow.artifacts.download_artifacts(
                   run_id=run_id,
