@@ -8,6 +8,8 @@ COPY pyproject.toml uv.lock ./
 
 RUN uv sync --frozen --no-dev
 
+RUN uv run python -c "import nltk; nltk.download('punkt_tab')"
+
 COPY . .
 
 ENV PYTHONPATH=/code/src
