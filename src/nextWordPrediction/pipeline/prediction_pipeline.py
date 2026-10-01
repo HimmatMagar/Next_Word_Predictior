@@ -2,14 +2,20 @@ import mlflow
 import torch
 import pickle
 import numpy as np
+from mlflow import MlflowClient
 from nltk import word_tokenize
 
 class PredictionPipeline:
       def __init__(self):
-            self.model = mlflow.pytorch.load_model("models:/PyTorchModel/Production")
+            client = MlflowClient()
 
-            with open("artifact/run_id.txt", "r") as f:
-                  run_id = f.read()
+            champion = client.get_model_version_by_alias(
+                  "pytorch-model",
+                  "champion"
+            )
+            run_id = champion.run_id
+
+            self.model = mlflow.pytorch.load_model("models:/pytorch-model@champion")
 
             vocab_path = mlflow.artifacts.download_artifacts(
                   run_id=run_id,

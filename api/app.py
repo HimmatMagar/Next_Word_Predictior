@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -36,7 +37,7 @@ async def training():
       os.system("main.py")
       return {"message": "Training endpoint is under development. Please check back later."}
 
-
+load_dotenv()
 prediction_pipeline = PredictionPipeline()
 @app.post("/predict")
 async def prediction(UserInput: Input):
