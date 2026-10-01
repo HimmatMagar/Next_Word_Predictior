@@ -1,0 +1,23 @@
+[project]
+name = "next-word-predictior"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "dagshub>=0.7.2",
+    "dvc>=3.67.1",
+    "ensure>=1.0.4",
+    "fastapi>=0.142.2",
+    "mlflow>=3.16.1",
+    "nltk>=3.10.3",
+    "notebook>=7.6.3",
+    "numpy>=2.5.3",
+    "pandas>=3.0.6",
+    "pydantic>=2.13.5",
+    "python-box>=7.4.1",
+    "pyyaml>=6.0.3",
+    "scikit-learn>=1.9.1",
+    "torch>=2.14.1",
+    "uvicorn>=0.54.0",
+]
