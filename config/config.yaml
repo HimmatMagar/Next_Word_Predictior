@@ -12,6 +12,5 @@ data_transformation:
 
 model_building:
   root_dir: artifact/build_model
-  input_file_path: artifact/data_transformation/input.pkl
-  output_file_path: artifact/data_transformation/output.pkl
+  input_file_path: artifact/data_ingestion/1661-0.txt
   model: model.pth

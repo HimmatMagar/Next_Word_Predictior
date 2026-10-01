@@ -1,7 +1,8 @@
 parameter:
-  seq_len: 50
-  embedding_units: 100
-  lstm_unit: 32
-  epochs: 50
-  batch_size: 32
+  seq_len: 32
+  embedding_units: 256
+  lstm_unit: 512
+  num_layer: 2
+  epochs: 15
+  batch_size: 4
   learning_rate: 0.001

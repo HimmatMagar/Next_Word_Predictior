@@ -70,11 +70,11 @@ class ConfigManager:
             model_building_config = ModelBuildingConfig(
                   root_dir=config.root_dir,
                   input_file=config.input_file_path,
-                  output_file=config.output_file_path,
                   model=config.model,
                   seq_length=params.seq_len,
                   lstm_unit=params.lstm_unit,
                   embedding_units=params.embedding_units,
+                  num_layer = params.num_layer,
                   epochs= params.epochs,
                   batch_size=params.batch_size,
                   learning_rate = params.learning_rate
