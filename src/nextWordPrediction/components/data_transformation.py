@@ -1,8 +1,8 @@
 import re
 import os
 import pickle
+import torch
 from nltk import word_tokenize
-from collections import Counter
 from nextWordPrediction import logger
 from nextWordPrediction.config import DataTransformationConfig
 
@@ -35,60 +35,15 @@ class DataTransform:
             return text
       
       
-      def text_to_indices(self, sentence, vocab):
-            numeric_sentence = []
-
-            for token in sentence:
-                  if token in vocab:
-                        numeric_sentence.append(vocab[token])
-                  else:
-                        numeric_sentence.append(vocab['<UNK>'])
-            return numeric_sentence
-      
-
       def build_vocab(self, text):
-            tokens = word_tokenize(text)
             vocab = {
                   "<UNK>":0
             }
 
-            for token in Counter(tokens).keys():
+            for token in word_tokenize(text):
                   if token not in vocab:
                         vocab[token] = len(vocab)
+            with open(os.path.join(self.config.root_dir, "tokenizer.pkl"), "wb") as f:
+                  pickle.dump(vocab, f)
+            logger.info("vocabolaries saved successfully")
             return vocab
-      
-
-      def build_sequence(self, indices, seq_len):
-            x = []
-            y = []
-
-            for i in range(len(indices) - seq_len):
-                  input_seq = indices[i : i + seq_len]
-                  target = indices[i + seq_len]
-
-                  x.append(input_seq)
-                  y.append(target)
-            return x, y
-
-
-      def final_output(self):
-            try:
-                  data = self.load_data()
-                  text = self.clean_text(data)
-                  vocab = self.build_vocab(text)
-
-                  numeric_sentence = self.text_to_indices(word_tokenize(text), vocab)
-
-                  x, y = self.build_sequence(numeric_sentence, self.config.seq_len)
-                  with open(os.path.join(self.config.root_dir, "input.pkl"), "wb") as f:
-                        pickle.dump(x, f)
-
-                  with open(os.path.join(self.config.root_dir, "output.pkl"), "wb") as f:
-                        pickle.dump(y, f)
-
-                  with open(os.path.join(self.config.root_dir, "tokenizer.pkl"), "wb") as f:
-                        pickle.dump(vocab, f)
-
-                  logger.info("Data Transormation is completed")
-            except Exception as e:
-                  raise e

@@ -19,7 +19,6 @@ class DataTransformationConfig:
 class ModelBuildingConfig:
       root_dir: Path
       input_file: Path
-      output_file: Path
       model: Path
       seq_length: int
       lstm_unit: int

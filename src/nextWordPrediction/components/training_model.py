@@ -5,7 +5,7 @@ from pathlib import Path
 from torch.utils.data import DataLoader
 from nextWordPrediction import logger
 from nextWordPrediction.components.model_building import LSTM
-from nextWordPrediction.components.data_loader import DatasetLoader
+from nextWordPrediction.components.data_loader import CreateDataLoader
 from nextWordPrediction.utils import load_file
 from nextWordPrediction.entity import ModelBuildingConfig
 
@@ -17,12 +17,9 @@ class TrainModel:
             self.vocab = load_file(Path("artifact/data_transformation/tokenizer.pkl"))
       
       def prepare_data(self):
-            input_data = load_file(Path(self.config.input_file))
-            output_data = load_file(Path(self.config.output_file))
+            text = load_file(Path(self.config.input_file))
 
-            data = DatasetLoader(input_data, output_data)
-            chunk = DataLoader(data, batch_size=self.config.batch_size)
-            return chunk
+            chunk = CreateDataLoader(text, self.vocab)
 
 
       def train_model(self):
