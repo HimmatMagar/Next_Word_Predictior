@@ -5,7 +5,7 @@ from pathlib import Path
 from nextWordPrediction import logger
 from nextWordPrediction.components.model_building import LSTM
 from nextWordPrediction.components.data_loader import CreateDataLoader
-from nextWordPrediction.utils import load_file
+from nextWordPrediction.utils import load_file, load_text
 from nextWordPrediction.entity import ModelBuildingConfig
 
 
@@ -16,7 +16,7 @@ class TrainModel:
             self.vocab = load_file(Path("artifact/data_transformation/tokenizer.pkl"))
       
       def prepare_data(self):
-            text = load_file(Path(self.config.input_file))
+            text = load_text(Path(self.config.input_file))
             chunk = CreateDataLoader(text, self.vocab)
             return chunk
 
@@ -36,7 +36,7 @@ class TrainModel:
             for i in range(self.config.epochs):
                   total_loss = 0
                   for x, y in chunk:
-                        x, y = x.to(device), y.tp(device)
+                        x, y = x.to(device), y.to(device)
                         optimizer.zero_grad()
 
                         output = model(x)

@@ -79,3 +79,12 @@ def load_file(file:Path):
             return data
       except Exception as e:
             raise e
+
+@ensure_annotations
+def load_text(file: Path):
+      try:
+            with open(file, 'r', encoding='utf-8') as f:
+                  text = f.read()
+                  return text
+      except FileNotFoundError as e:
+            raise e

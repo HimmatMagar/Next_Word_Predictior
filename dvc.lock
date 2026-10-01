@@ -36,3 +36,23 @@ stages:
       hash: md5
       md5: e1fa12c9e0f930b844361be389685e12
       size: 121498
+  model_building:
+    cmd: uv run src/nextWordPrediction/pipeline/model_building_pipeline.py
+    deps:
+    - path: artifact/data_ingestion/1661-0.txt
+      hash: md5
+      md5: e14dc3d49f06c31509b911df7a2eb850
+      size: 607791
+    - path: config/config.yaml
+      hash: md5
+      md5: c43ae93146bca10bdc55b21b20689ed0
+      size: 491
+    - path: src/nextWordPrediction/components/training_model.py
+      hash: md5
+      md5: e4484f757bb7d27c172b9c28fc00137c
+      size: 2108
+    outs:
+    - path: artifact/build_model/model.pth
+      hash: md5
+      md5: 8c5979a55d430a99e4aafa52f86b3717
+      size: 43349634

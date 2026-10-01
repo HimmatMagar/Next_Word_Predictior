@@ -17,12 +17,13 @@ class ModelBuildingPipeline:
             try:
                   configure_mlflow(experiment_name="LSTM-Model")
 
-                  with mlflow.start_run(run_name="LSTM"):
+                  with mlflow.start_run(run_name="LSTM-retrained"):
                         mlflow.log_params({
                               "seq len": model_building_config.seq_length,
                               "lstm unit": model_building_config.lstm_unit,
                               "embedding_unit": model_building_config.embedding_units,
                               "learning rate": model_building_config.learning_rate,
+                              "num_layer": model_building_config.num_layer,
                               "batch size": model_building_config.batch_size,
                               "epochs": model_building_config.epochs
                         })
@@ -38,21 +39,11 @@ class ModelBuildingPipeline:
                         
                         mlflow.log_metric("loss", total_loss)
 
-                        logged_model = mlflow.pytorch.log_model(
+                        mlflow.pytorch.log_model(
                               pytorch_model = model,
-                              artifact_path="pytorch_model"
-                        )
-
-                        pyTorchModel = mlflow.register_model(
-                              model_uri=f"models:/{logged_model.run_id}",
-                              name="PyTorchLSTM"
-                        )
-
-                        client = mlflow.tracking.MlflowClient()
-                        client.transition_model_version_stage(
-                              name="PyTorchLSTM",
-                              version=pyTorchModel.version,
-                              stage="Staging"
+                              artifact_path="pytorch_model",
+                              serialization_format="pickle",
+                              registered_model_name="pytorch-model"
                         )
             except Exception:
                   raise

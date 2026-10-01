@@ -1,10 +1,11 @@
 import torch
+from nltk import word_tokenize
 from torch.utils.data import Dataset, DataLoader
 
 
 def numericalize(sentences, vocab):
       return torch.tensor(
-            [vocab.get(word, vocab['<UNK>']) for word in sentences.split()],
+            [vocab.get(word, vocab['<UNK>']) for word in word_tokenize(sentences)],
             dtype=torch.long
       )
 

@@ -42,7 +42,6 @@ class ConfigManager:
                         and Data path for data transformation.
             """
             config = self.config.data_transformation
-            params = self.params.parameter
 
             create_directory([config.root_dir])
             data_transformation_config = DataTransformationConfig(

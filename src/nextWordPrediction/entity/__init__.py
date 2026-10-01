@@ -21,7 +21,7 @@ class ModelBuildingConfig:
       model: Path
       seq_length: int
       lstm_unit: int
-      um_layer: int
+      num_layer: int
       embedding_units: int
       epochs: int
       batch_size: int
