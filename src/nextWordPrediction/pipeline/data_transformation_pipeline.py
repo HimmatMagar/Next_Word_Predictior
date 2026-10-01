@@ -12,7 +12,7 @@ class DataTransformPipeline():
             config = ConfigManager()
             data_transform_config = config.get_data_transform_config()
             data_transform = DataTransform(data_transform_config)
-            data_transform.final_output()
+            data_transform.build_vocab()
 
 if __name__ == "__main__":
       try:

@@ -12,7 +12,6 @@ class DataIngestionConfig:
 @dataclass(frozen=True)
 class DataTransformationConfig:
       root_dir: Path
-      seq_len: int
       data_file_path: Path
 
 @dataclass(frozen=True)

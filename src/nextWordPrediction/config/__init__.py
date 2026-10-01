@@ -47,7 +47,6 @@ class ConfigManager:
             create_directory([config.root_dir])
             data_transformation_config = DataTransformationConfig(
                   root_dir=config.root_dir,
-                  seq_len = params.seq_len,
                   data_file_path=config.data_file_path
             )
             return data_transformation_config

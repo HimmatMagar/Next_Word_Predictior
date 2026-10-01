@@ -1,7 +1,6 @@
 import re
 import os
 import pickle
-import torch
 from nltk import word_tokenize
 from nextWordPrediction import logger
 from nextWordPrediction.config import DataTransformationConfig
@@ -35,12 +34,12 @@ class DataTransform:
             return text
       
       
-      def build_vocab(self, text):
+      def build_vocab(self):
             vocab = {
                   "<UNK>":0
             }
-
-            for token in word_tokenize(text):
+            text = self.load_data()
+            for token in word_tokenize(self.clean_text(text)):
                   if token not in vocab:
                         vocab[token] = len(vocab)
             with open(os.path.join(self.config.root_dir, "tokenizer.pkl"), "wb") as f:

@@ -2980,7 +2980,7 @@ wheels = [
 ]
 
 [[package]]
-name = "next-word-predictior"
+name = "nextwordprediction"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
