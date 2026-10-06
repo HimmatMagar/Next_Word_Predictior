@@ -19,8 +19,8 @@ class TrainModel:
       def prepare_data(self):
             train_text = load_text(Path(self.config.input_file))
             val_text = load_text(Path(self.config.val_file))
-            train_chunk = CreateDataLoader(train_text, self.vocab)
-            val_chunk = CreateDataLoader(val_text, self.vocab)
+            train_chunk = CreateDataLoader(train_text, self.vocab, shuffle=True, max_length=self.config.seq_length)
+            val_chunk = CreateDataLoader(val_text, self.vocab, shuffle=False, max_length=self.config.seq_length)
             return train_chunk, val_chunk
       
 

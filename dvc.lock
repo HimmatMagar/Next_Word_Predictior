@@ -53,19 +53,19 @@ stages:
       size: 732
     - path: src/nextWordPrediction/components/training_model.py
       hash: md5
-      md5: af2bb3545057e65783a3a53410e67a3b
-      size: 3397
+      md5: b91a19a0f93615b9f74e43c21bd5448e
+      size: 3496
     outs:
     - path: artifact/build_model/model.pth
       hash: md5
-      md5: b80a7ed2e48967fbadf0b699d2b83512
+      md5: dc2563d2fde24745058e1649805ca2fa
       size: 40086274
   model_eval:
     cmd: uv run src/nextWordPrediction/pipeline/model_eval_pipeline.py
     deps:
     - path: artifact/build_model/model.pth
       hash: md5
-      md5: b80a7ed2e48967fbadf0b699d2b83512
+      md5: dc2563d2fde24745058e1649805ca2fa
       size: 40086274
     - path: artifact/data_transformation/test.txt
       hash: md5
@@ -77,10 +77,10 @@ stages:
       size: 732
     - path: src/nextWordPrediction/components/model_eval.py
       hash: md5
-      md5: 4d67b7516fa4accb7b5b5b6e292cfff0
-      size: 1970
+      md5: 0c609e417308a40da04c30657f2dcabc
+      size: 1985
     outs:
     - path: artifact/model_eval/metric.json
       hash: md5
-      md5: 89a6ccf7fc6d8673be374c20c21c4de6
+      md5: 0ce02a6419be9fda7128aa836eca3009
       size: 76
