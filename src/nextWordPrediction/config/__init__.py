@@ -1,6 +1,6 @@
 from nextWordPrediction.utils import *
 from nextWordPrediction.constants import __CONFIG__, __PARAMS__
-from nextWordPrediction.entity import DataIngestionConfig, DataTransformationConfig, ModelBuildingConfig
+from nextWordPrediction.entity import DataIngestionConfig, DataTransformationConfig, ModelBuildingConfig, ModelEvalConfig
 
 
 class ConfigManager:
@@ -68,6 +68,7 @@ class ConfigManager:
             model_building_config = ModelBuildingConfig(
                   root_dir=config.root_dir,
                   input_file=config.input_file_path,
+                  val_file=config.val_file_path,
                   model=config.model,
                   seq_length=params.seq_len,
                   lstm_unit=params.lstm_unit,
@@ -79,3 +80,15 @@ class ConfigManager:
             )
 
             return model_building_config
+
+
+      def get_model_eval_config(self) -> ModelEvalConfig:
+            config = self.config.model_eval
+            create_directory([config.root_dir])
+
+            return ModelEvalConfig(
+                  root_dir=config.root_dir,
+                  test_data_file=config.test_file_path,
+                  model=config.model,
+                  metrices=config.metric,
+            )

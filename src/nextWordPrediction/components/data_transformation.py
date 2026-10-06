@@ -32,6 +32,20 @@ class DataTransform:
                   text = re.sub(r'\n+', ' ', text)                # remove newlines → single space
                   text = re.sub(r'\s+', ' ', text)                # collapse multiple spaces
             return text
+
+      
+      def split_text(self, text):
+            text = self.clean_text(text=text)
+            n = len(text)
+
+            train_text = text[:int(0.8 * n)]
+            val_text   = text[int(0.8 * n):int(0.9 * n)]
+            test_text  = text[int(0.9 * n):]
+
+            for name, data in [("train", train_text), ("val", val_text), ("test", test_text)]:
+                  with open(os.path.join(self.config.root_dir, f"{name}.txt"), "w", encoding="utf-8") as f:
+                        f.write(data)
+            return train_text
       
       
       def build_vocab(self):
@@ -39,7 +53,8 @@ class DataTransform:
                   "<UNK>":0
             }
             text = self.load_data()
-            for token in word_tokenize(self.clean_text(text)):
+            train_text = self.split_text(text)
+            for token in word_tokenize(train_text):
                   if token not in vocab:
                         vocab[token] = len(vocab)
             with open(os.path.join(self.config.root_dir, "tokenizer.pkl"), "wb") as f:

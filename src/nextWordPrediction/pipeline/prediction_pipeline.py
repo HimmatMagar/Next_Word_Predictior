@@ -50,8 +50,13 @@ class PredictionPipeline:
             x = torch.tensor(input_seq, dtype=torch.long).unsqueeze(0).to(device)
 
             with torch.no_grad():
-                  output = self.model(x)
-                  probs  = torch.softmax(output, dim=1)
+                  logits = self.model(x)
+
+                  for token in ("<unk>"):
+                        if token in self.vocab:
+                              logits[:, self.vocab[token]] = float("-inf")
+                              
+                  probs  = torch.softmax(logits, dim=1)
                   top_probs, top_indices = torch.topk(probs, k, dim=1)
 
             return [idx2word[idx.item()] for idx, prob in zip(top_indices[0], top_probs[0])]

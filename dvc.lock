@@ -5,8 +5,8 @@ stages:
     deps:
     - path: config/config.yaml
       hash: md5
-      md5: c43ae93146bca10bdc55b21b20689ed0
-      size: 491
+      md5: 15454554874b8505669166be73fc4836
+      size: 732
     - path: src/nextWordPrediction/components/data_ingestion.py
       hash: md5
       md5: 95cb277921d1c8db6f3b2cb7605446f6
@@ -25,17 +25,17 @@ stages:
       size: 607791
     - path: config/config.yaml
       hash: md5
-      md5: c43ae93146bca10bdc55b21b20689ed0
-      size: 491
+      md5: 15454554874b8505669166be73fc4836
+      size: 732
     - path: src/nextWordPrediction/components/data_transformation.py
       hash: md5
-      md5: 65c158593f55dd290d293efeb004c6e3
-      size: 1727
+      md5: 3ec9baa1d490ac64cbd4c7fc621ca665
+      size: 2297
     outs:
     - path: artifact/data_transformation/tokenizer.pkl
       hash: md5
-      md5: e1fa12c9e0f930b844361be389685e12
-      size: 121498
+      md5: 7fd056b0a6108dcf6d774e39b03a05b1
+      size: 106994
   model_building:
     cmd: uv run src/nextWordPrediction/pipeline/model_building_pipeline.py
     deps:

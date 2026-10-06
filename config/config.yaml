@@ -12,5 +12,12 @@ data_transformation:
 
 model_building:
   root_dir: artifact/build_model
-  input_file_path: artifact/data_ingestion/1661-0.txt
+  input_file_path: artifact/data_transformation/train.txt
+  val_file_path: artifact/data_transformation/val.txt
   model: model.pth
+
+model_eval:
+  root_dir: artifact/model_eval
+  test_file_path: artifact/data_transformation/test.txt
+  model: artifact/build_model/model.pth
+  metric: artifact/model_eval/metric.json
