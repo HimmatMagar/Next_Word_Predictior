@@ -1,7 +1,7 @@
 import mlflow
 from nextWordPrediction import logger
 from nextWordPrediction.config import ConfigManager
-from nextWordPrediction.utils.mlflow_config import configure_mlflow
+from nextWordPrediction.utils.mlflow_config import configure_mlflow, save_run_id
 from nextWordPrediction.components.training_model import TrainModel
 
 
@@ -17,7 +17,7 @@ class ModelBuildingPipeline:
             try:
                   configure_mlflow(experiment_name="LSTM-Model")
 
-                  with mlflow.start_run(run_name="LSTM-retrained"):
+                  with mlflow.start_run(run_name="LSTM-retrained") as run:
                         mlflow.log_params({
                               "seq len": model_building_config.seq_length,
                               "lstm unit": model_building_config.lstm_unit,
@@ -35,9 +35,9 @@ class ModelBuildingPipeline:
                         )
 
                         model_build = TrainModel(model_building_config)
-                        model, total_loss = model_build.train_model()
+                        model, perplexity = model_build.train_model()
                         
-                        mlflow.log_metric("loss", total_loss)
+                        mlflow.log_metric("val perplexity", perplexity)
 
                         mlflow.pytorch.log_model(
                               pytorch_model = model,
@@ -45,6 +45,8 @@ class ModelBuildingPipeline:
                               serialization_format="pickle",
                               registered_model_name="pytorch-model"
                         )
+                        logger.info("Model logged successfully")
+                        save_run_id(run.info.run_id)
             except Exception:
                   raise
 

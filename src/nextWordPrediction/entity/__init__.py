@@ -31,6 +31,6 @@ class ModelBuildingConfig:
 @dataclass(frozen=True)
 class ModelEvalConfig:
       root_dir: Path
-      test_file: Path
+      test_file_path: Path
       model: Path
       metric: Path

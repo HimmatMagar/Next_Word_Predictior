@@ -4,5 +4,5 @@ parameter:
   lstm_unit: 512
   num_layer: 2
   epochs: 15
-  batch_size: 4
-  learning_rate: 0.001
+  batch_size: 8
+  learning_rate: 0.0001

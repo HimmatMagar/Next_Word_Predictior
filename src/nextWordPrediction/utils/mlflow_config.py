@@ -25,3 +25,20 @@ def configure_mlflow(experiment_name: str) -> None:
     mlflow.set_tracking_uri(tracking_uri)
     mlflow.set_experiment(experiment_name=experiment_name)
     print(f"Mlflow -> Dagshub | Experiment: {experiment_name}")
+
+
+def save_run_id(run_id: str, path: str = "artifact/run_id.txt") -> None:
+    try:
+        with open(path, "w") as f:
+            f.write(run_id)
+    except Exception as e:
+        raise e
+
+
+def load_run_id(path: str = "artifact/run_id.txt") -> None:
+    try:
+        with open(path) as f:
+            id = f.read().strip()
+            return id
+    except FileNotFoundError as e:
+        raise e

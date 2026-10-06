@@ -13,7 +13,7 @@ class ModelEval:
 
       
       def _prepare_data(self):
-            test_text = load_text(Path(self.config.test_data_file))
+            test_text = load_text(Path(self.config.test_file_path))
             test_chunk = CreateDataLoader(test_text, self.vocab)
             return test_chunk
 

@@ -88,7 +88,7 @@ class ConfigManager:
 
             return ModelEvalConfig(
                   root_dir=config.root_dir,
-                  test_data_file=config.test_file_path,
+                  test_file_path=config.test_file_path,
                   model=config.model,
-                  metrices=config.metric,
+                  metric=config.metric,
             )

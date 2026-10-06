@@ -26,7 +26,7 @@ class TrainModel:
 
       @torch.no_grad()
       def _evaluate(self, model, dataloader, criterion, device):
-            model.eval()
+            model.eval();
             total_loss, total_tokens = 0, 0
 
             for x, y in dataloader:
@@ -48,9 +48,10 @@ class TrainModel:
                   len(self.vocab),
                   embedding_unit=self.config.embedding_units,
                   lstm_unit=self.config.lstm_unit,
-                  num_layer=self.config.num_layer
+                  num_layer=self.config.num_layer,
+                  dropout=0.3
             ).to(device)
-            optimizer = torch.optim.Adam(params=model.parameters(), lr=self.config.learning_rate)
+            optimizer = torch.optim.Adam(params=model.parameters(), lr=self.config.learning_rate, weight_decay=1e-2)
             train_loader, val_loader = self.prepare_data()
 
 

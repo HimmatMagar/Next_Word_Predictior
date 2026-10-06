@@ -21,7 +21,19 @@ stages:
     deps:
       - src/nextWordPrediction/components/training_model.py
       - config/config.yaml
-      - artifact/data_ingestion/1661-0.txt
+      - artifact/data_transformation/train.txt
+      - artifact/data_transformation/val.txt
     outs:
       - artifact/build_model/model.pth
+    
+  model_eval:
+    cmd: uv run src/nextWordPrediction/pipeline/model_eval_pipeline.py
+    deps:
+      - src/nextWordPrediction/components/model_eval.py
+      - artifact/data_transformation/test.txt
+      - config/config.yaml
+      - artifact/build_model/model.pth
+    metrics:
+      - artifact/model_eval/metric.json:
+          cache: false
     

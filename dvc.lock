@@ -39,20 +39,48 @@ stages:
   model_building:
     cmd: uv run src/nextWordPrediction/pipeline/model_building_pipeline.py
     deps:
-    - path: artifact/data_ingestion/1661-0.txt
+    - path: artifact/data_transformation/train.txt
       hash: md5
-      md5: e14dc3d49f06c31509b911df7a2eb850
-      size: 607791
+      md5: b7fdc92f0d65997edbc85f9fc6270811
+      size: 443513
+    - path: artifact/data_transformation/val.txt
+      hash: md5
+      md5: 3ca190a6a3bfc34270edb1bf31681f37
+      size: 55439
     - path: config/config.yaml
       hash: md5
-      md5: c43ae93146bca10bdc55b21b20689ed0
-      size: 491
+      md5: 15454554874b8505669166be73fc4836
+      size: 732
     - path: src/nextWordPrediction/components/training_model.py
       hash: md5
-      md5: e4484f757bb7d27c172b9c28fc00137c
-      size: 2108
+      md5: af2bb3545057e65783a3a53410e67a3b
+      size: 3397
     outs:
     - path: artifact/build_model/model.pth
       hash: md5
-      md5: 8c5979a55d430a99e4aafa52f86b3717
-      size: 43349634
+      md5: b80a7ed2e48967fbadf0b699d2b83512
+      size: 40086274
+  model_eval:
+    cmd: uv run src/nextWordPrediction/pipeline/model_eval_pipeline.py
+    deps:
+    - path: artifact/build_model/model.pth
+      hash: md5
+      md5: b80a7ed2e48967fbadf0b699d2b83512
+      size: 40086274
+    - path: artifact/data_transformation/test.txt
+      hash: md5
+      md5: 44e2a0ba14013e9b97b441450eefa323
+      size: 55440
+    - path: config/config.yaml
+      hash: md5
+      md5: 15454554874b8505669166be73fc4836
+      size: 732
+    - path: src/nextWordPrediction/components/model_eval.py
+      hash: md5
+      md5: 4d67b7516fa4accb7b5b5b6e292cfff0
+      size: 1970
+    outs:
+    - path: artifact/model_eval/metric.json
+      hash: md5
+      md5: 89a6ccf7fc6d8673be374c20c21c4de6
+      size: 76
